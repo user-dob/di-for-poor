@@ -1,11 +1,11 @@
 {
   "name": "di-for-poor",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --require babel-register",
-    "prepublish": "node_modules/babel-cli/bin/babel.js src --out-dir lib"
+    "prepublish": "node node_modules/babel-cli/bin/babel.js src --out-dir lib"
   },
   "keywords": [],
   "author": "user-dob <user.dob@gmail.com>",
