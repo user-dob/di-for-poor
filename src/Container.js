@@ -3,6 +3,7 @@ const toCamelCase = name => name.replace(/^\w/, c => c.toLowerCase());
 export class Container {
 	constructor() {
 		this.map = new Map();
+		this.cache = new Map();
 	}
 
 	normalizeService(args) {
@@ -28,15 +29,12 @@ export class Container {
 
 	add(...args) {
 		const data = this.normalizeService(args);
-		data.instance = (() => {
-			let cache = null;
-			return dictionary => {
-				if (cache === null) {
-					cache = Reflect.construct(data.service, [dictionary]);
-				}
-				return cache;
+		data.instance = dictionary => {
+			if (!this.cache.has(data.id)) {
+				this.cache.set(data.id, Reflect.construct(data.service, [dictionary]));
 			}
-		})();
+			return this.cache.get(data.id);
+		};
 		this.addServiceInstance(data);
 	}
 
